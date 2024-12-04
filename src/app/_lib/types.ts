@@ -5,10 +5,12 @@ export interface IUser {
     surname: string;
     login: string;
     password: string;
-    expires?: number; 
+    expires?: number;
+    attempts: number
+    time?: number
 }
 
-export type InputUser = Omit<IUser, 'id' | 'expires'>; 
+export type InputUser = Omit<IUser, 'id' | 'expires' | "attempts" | "time">;
 
 export interface ISession {
     id: string;

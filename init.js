@@ -7,7 +7,9 @@ sql.exec(`
         name TEXT,
         surname TEXT,
         login TEXT,
-        password TEXT
+        password TEXT,
+        attempts INTEGER DEFAULT 0,
+        time INTEGER
     )    
 `)
 

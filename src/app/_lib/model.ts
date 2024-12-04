@@ -5,6 +5,7 @@ const sql = new db('auth.db')
 
 export const getUserByLogin = (login: string): (IUser | null) => {
     const user = sql.prepare("SELECT * FROM users where login = ?").get(login)
+
     if (user) {
         return user as IUser
     }
@@ -16,8 +17,8 @@ export const getAllUsers = () => {
 }
 
 export const insertUser = (user: InputUser): db.RunResult => {
-    return sql.prepare(`INSERT INTO users(name, surname, login, password)
-                        VALUES(@name, @surname, @login, @password)                    
+    return sql.prepare(`INSERT INTO users(name, surname, login, password )
+                 VALUES(@name, @surname, @login, @password )                    
     `).run(user)
 }
 
@@ -50,4 +51,22 @@ export const updateToken = (token: string, newExpiry: number): void => {
     `;
 
     sql.prepare(query).run(newExpiry, token);
+};
+
+export const updateAttempts = (attempts: number, userId: number) => {
+    const query = `
+        UPDATE users 
+        SET attempts = ? 
+        WHERE id = ?;
+    `;
+    sql.prepare(query).run(attempts, userId);
+};
+
+export const updateTime = (time: number, userId: number) => {
+    const query = `
+        UPDATE users 
+        SET time = ? 
+        WHERE id = ?;
+    `;
+    sql.prepare(query).run(time, userId);
 };
